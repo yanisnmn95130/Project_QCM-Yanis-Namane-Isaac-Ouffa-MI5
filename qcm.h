@@ -28,7 +28,7 @@ typedef struct
 {
     char QcmName[64]; 
     
-    Question *questions;// tableau qui contient les questions du   qcm
+     Question *questions;// tableau qui contient les questions du   qcm
     
     int QuestionPossible
     
@@ -39,4 +39,16 @@ typedef struct
     int sequential;// active par lenseignant si =0 questions dans le désordre, si =1 questions dans l'ordre
 
 }Qcm;
+
+void InitQcm(Qcm *q);
+
+int  AllocQcm(Qcm *q);
+
+void InitQuestion(Question *q);
+
+int  AllocChoice(Choice *c, char *text);
+
+void FreeQuestion(Question *q);
+
+void FreeQcm(Qcm *q);
 
