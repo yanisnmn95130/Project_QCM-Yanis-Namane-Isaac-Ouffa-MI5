@@ -1,15 +1,6 @@
-ENSEIGNANT.C
-Contains all functions related to teacher mode.
-Uses utilitaire.c for input handling and
-stockage.c for saving QCMs to files.
-===================================================== */
+
 
 #include "enseignant.h"
-
-/* ----- CheckPassword ----- */
-/* Asks the teacher for the password up to 3 times */
-/* Compares input with PASSWORD defined in qcm.h */
-/* Returns 1 if correct, 0 after 3 failed attempts */
 
 int CheckPassword() {
 
@@ -34,11 +25,6 @@ printf("Wrong password. %d attempt(s) remaining.\n", 3 - attempts);
 printf("Access denied.\n");
 return 0; /* 3 failed attempts */
 }
-
-/* ----- TeacherMenu ----- */
-/* Displays the teacher main menu in a loop */
-/* Calls CreateQcm() if the teacher wants to create */
-/* a new QCM, loops until the teacher chooses to quit */
 
 void TeacherMenu() {
 
@@ -66,10 +52,6 @@ break;
 } while (choice != 2);
 }
 
-/* ----- CreateQcm ----- */
-/* Guides the teacher through the QCM creation process */
-/* Steps : name -> parameters -> questions -> save */
-/* Calls SetQcmParams(), AddQuestion(), SaveQcm() */
 
 void CreateQcm() {
 
@@ -122,10 +104,6 @@ printf("Error : could not save the QCM.\n");
 FreeQcm(&q);
 }
 
-/* ----- SetQcmParams ----- */
-/* Asks the teacher to configure the 3 QCM parameters */
-/* Each parameter is entered via GetIntInput(0, 1) */
-/* Takes a pointer to Qcm to modify the struct directly*/
 
 void SetQcmParams(Qcm *q) {
 
@@ -146,12 +124,6 @@ q->sequential = GetIntInput(0, 1);
 
 printf("\nParameters saved.\n");
 }
-
-/* ----- AddQuestion ----- */
-/* Adds a new question to the QCM */
-/* Asks for the statement, number of propositions, */
-/* text of each proposition and whether it is correct */
-/* Increments q->nbQuestions at the end */
 
 void AddQuestion(Qcm *q) {
 
@@ -176,24 +148,6 @@ char buffer[256];
 
 printf("Proposition %d : ", i + 1);
 GetStringInput(buffer, 256);
-
-/* allocate memory and copy the text */
-if (AllocChoice(&quest->answers[i], buffer) == 0) {
-printf("Error : could not allocate memory for proposition.\n");
-return;
-}
-
-/* ask if this proposition is correct */
-printf("Is this proposition correct ? (0=no / 1=yes) : ");
-quest->answers[i].correct = GetIntInput(0, 1);
-}
-
-/* step 4 : increment the question counter */
-q->nbQuestions++;
-
-printf("Question %d added successfully.\n", q->nbQuestions);
-}
-
 
 /* allocate memory and copy the text */
 if (AllocChoice(&quest->answers[i], buffer) == 0) {

@@ -1,54 +1,50 @@
-#ifndef Qcm_h
-#define Qcm_h
-#include<stdlib.h>
-#include<string.h>
-#define MaxChoice 4
-#define MaxQuestions 100
-#define MaxQcm 20
-#define Password "-motdepass123-"
+#ifndef QCM_H
+#define QCM_H
 
-typedef struct
-{
-    char *proposition; 
-    int correct;// si=0 faux, si =1 vrai
+#include <stdlib.h> /* malloc, free */
+#include <string.h> /* strlen, strcpy */
+#include <stdio.h> /* printf */
 
-}Choice;
+/* ----- Constants ----- */
 
-typedef struct
-{
-    char QuestionStatement[256];
-    
-    Choice answers[MaxChoice];// tableau contenant les proposition de reponses de la question 
-   
-    int AnswersPossible;// nombre de reponses possibles utilise a la fin 
+#define MAX_CHOICES 5
+#define MAX_QUESTIONS 20
+#define MAX_QCM 50
+#define PASSWORD "prof1234"
 
-}Question;
+/* ----- Structure Choice ----- */
 
-typedef struct
-{
-    char QcmName[64]; 
-    
-     Question *questions;// tableau qui contient les questions du   qcm
-    
-    int QuestionPossible
-    
-    int NegativPoints;// active par lenseignant si =0 retire pas de point en cas de reponse fausse, si =1 retire des points en cas de reponse fausse
-    
-    int MultipleChoice;// active par lenseignant si =0 reponse unique, si =1 reponse multiple
-    
-    int sequential;// active par lenseignant si =0 questions dans le désordre, si =1 questions dans l'ordre
+typedef struct {
+char *proposition;
+int correct;
+} Choice;
 
-}Qcm;
+/* ----- Structure Question ----- */
+
+typedef struct {
+char statement[512];
+Choice answers[MAX_CHOICES];
+int nbAnswers;
+} Question;
+
+/* ----- Structure Qcm ----- */
+
+typedef struct {
+char name[64];
+Question *questions;
+int nbQuestions;
+int negativePoints;
+int multipleChoice;
+int sequential;
+} Qcm;
+
+/* ----- Function declarations ----- */
 
 void InitQcm(Qcm *q);
-
-int  AllocQcm(Qcm *q);
-
+int AllocQcm(Qcm *q);
 void InitQuestion(Question *q);
-
-int  AllocChoice(Choice *c, char *text);
-
+int AllocChoice(Choice *c, char *text);
 void FreeQuestion(Question *q);
-
 void FreeQcm(Qcm *q);
 
+#endif /* QCM_H */
